@@ -66,7 +66,7 @@ def api_plan():
 
     try:
         answer = create_study_plan(prompt, syllabus=syllabus, weak_areas=weak_areas)
-        return jsonify(answer=answer)
+        return jsonify(answer=answer, image_url="/static/study-output.svg")
     except Exception as exc:
         return jsonify(error=str(exc)), 500
 

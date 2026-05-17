@@ -30,6 +30,7 @@
         <section class="output-card">
           <h2>Planner response</h2>
           <pre id="response">Your study plan will appear here.</pre>
+          <img id="output-image" src="" alt="Planner output visual" hidden />
         </section>
       </main>
     </div>
@@ -40,6 +41,7 @@
       const syllabusField = document.getElementById("syllabus");
       const weakAreasField = document.getElementById("weak-areas");
       const responseField = document.getElementById("response");
+      const outputImage = document.getElementById("output-image");
 
       submitBtn.addEventListener("click", async () => {
         const prompt = promptField.value.trim();
@@ -62,7 +64,16 @@
         const data = await result.json();
         if (result.ok) {
           responseField.textContent = data.answer;
+          if (data.image_url) {
+            outputImage.src = data.image_url;
+            outputImage.hidden = false;
+          } else {
+            outputImage.hidden = true;
+            outputImage.src = "";
+          }
         } else {
+          outputImage.hidden = true;
+          outputImage.src = "";
           responseField.textContent = data.error || "An unknown error occurred.";
         }
       });

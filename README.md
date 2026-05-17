@@ -56,6 +56,7 @@ The web UI now accepts:
 - a study request
 - syllabus or topic list
 - weak areas to adjust the plan
+- a visual output image shown after the plan is generated
 
 ## Customization
 

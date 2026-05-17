@@ -117,6 +117,16 @@ pre {
   border: 1px solid rgba(148, 163, 184, 0.12);
 }
 
+.output-card img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  margin-top: 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
 @media (max-width: 860px) {
   main {
     grid-template-columns: 1fr;
