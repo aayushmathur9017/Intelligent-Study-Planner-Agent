@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intelligent Study Planner</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header>
+        <h1>Intelligent Study Planner</h1>
+        <p>Enter a study request, add your syllabus and weak areas, then generate a complete plan with notes, quizzes, and performance guidance.</p>
+      </header>
+
+      <main>
+        <section class="input-card">
+          <label for="prompt">Study request</label>
+          <textarea id="prompt" placeholder="e.g. I need a 2-week study plan for data structures and algorithms."></textarea>
+
+          <label for="syllabus">Syllabus / topics</label>
+          <textarea id="syllabus" placeholder="e.g. Arrays, Linked Lists, Trees, Graphs, Dynamic Programming"></textarea>
+
+          <label for="weak-areas">Weak areas (optional)</label>
+          <textarea id="weak-areas" placeholder="e.g. I struggle with dynamic programming and recursion."></textarea>
+
+          <button id="submit-btn">Generate Complete Study Plan</button>
+        </section>
+
+        <section class="output-card">
+          <h2>Planner response</h2>
+          <pre id="response">Your study plan will appear here.</pre>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const submitBtn = document.getElementById("submit-btn");
+      const promptField = document.getElementById("prompt");
+      const syllabusField = document.getElementById("syllabus");
+      const weakAreasField = document.getElementById("weak-areas");
+      const responseField = document.getElementById("response");
+
+      submitBtn.addEventListener("click", async () => {
+        const prompt = promptField.value.trim();
+        const syllabus = syllabusField.value.trim();
+        const weakAreas = weakAreasField.value.trim();
+
+        if (!prompt) {
+          responseField.textContent = "Please enter a study request.";
+          return;
+        }
+
+        responseField.textContent = "Generating complete study plan...";
+
+        const result = await fetch("/api/plan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt, syllabus, weak_areas: weakAreas }),
+        });
+
+        const data = await result.json();
+        if (result.ok) {
+          responseField.textContent = data.answer;
+        } else {
+          responseField.textContent = data.error || "An unknown error occurred.";
+        }
+      });
+    </script>
+  </body>
+</html>
